@@ -10,7 +10,7 @@
   elb_target_group:
     region: "{{ region }}"
     profile: "{{ profile | default(omit) }}"
-    name: "{{ item.name }}"
+    name: "{{ item.value }}"
     state: present
     protocol: "{{ loadbalancer_target_group.protocol }}"
     port: "{{ loadbalancer_target_group.port }}"
@@ -27,6 +27,6 @@
       Application: "{{ role_type }}"
       Environment: "{{ env }}"
       Tier: "load_balancer"
-      Target: "{{ item.target }}"
+      Target: "{{ item.key }}"
       Protocol: "{{ loadbalancer_target_group.protocol }}"
-  with_items: "{{ target_groups }}"
+  with_dict: "{{ target_groups }}"
