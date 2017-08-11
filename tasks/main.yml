@@ -23,6 +23,7 @@
     health_check_interval: "{{ loadbalancer_health_check.interval }}"
     unhealthy_threshold_count: "{{ loadbalancer_health_check.unhealthy_threshold }}"
     healthy_threshold_count: "{{ loadbalancer_health_check.healthy_threshold }}"
+    successful_response_codes: "{{ loadbalancer_health_check.successful_response_codes|default(omit) }}"
     tags:
       Application: "{{ role_type }}"
       Environment: "{{ env }}"
