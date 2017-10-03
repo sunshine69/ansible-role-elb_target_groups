@@ -24,6 +24,7 @@
     unhealthy_threshold_count: "{{ loadbalancer_health_check.unhealthy_threshold }}"
     healthy_threshold_count: "{{ loadbalancer_health_check.healthy_threshold }}"
     successful_response_codes: "{{ loadbalancer_health_check.successful_response_codes|default(omit) }}"
+    deregistration_delay_timeout: "{{ loadbalancer_target_group.connection_draining|default(omit) }}"
     tags:
       Application: "{{ role_type }}"
       Environment: "{{ env }}"
