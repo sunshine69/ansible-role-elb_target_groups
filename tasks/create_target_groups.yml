@@ -1,0 +1,34 @@
+- name: find target group VPC
+  ec2_vpc_net_facts:
+    region: "{{ region }}"
+    profile: "{{ profile | default(omit) }}"
+    filters:
+      tag:Name: "xvt-{{ vpc_name }}"
+  register: vpc_facts
+
+- name: create target groups
+  elb_target_group:
+    region: "{{ region }}"
+    profile: "{{ profile | default(omit) }}"
+    name: "{{ item.value }}"
+    state: present
+    protocol: "{{ loadbalancer_target_group.protocol }}"
+    port: "{{ loadbalancer_target_group.port }}"
+    modify_targets: no
+    vpc_id: "{{ vpc_facts.vpcs[0].id }}"
+    health_check_protocol: "{{ loadbalancer_health_check.protocol }}"
+    health_check_port: "{{ loadbalancer_health_check.port }}"
+    health_check_path: "{{ loadbalancer_health_check.path }}"
+    health_check_timeout: "{{ loadbalancer_health_check.response_timeout }}"
+    health_check_interval: "{{ loadbalancer_health_check.interval }}"
+    unhealthy_threshold_count: "{{ loadbalancer_health_check.unhealthy_threshold }}"
+    healthy_threshold_count: "{{ loadbalancer_health_check.healthy_threshold }}"
+    successful_response_codes: "{{ loadbalancer_health_check.successful_response_codes|default(omit) }}"
+    deregistration_delay_timeout: "{{ loadbalancer_target_group.connection_draining|default(omit) }}"
+    tags:
+      Application: "{{ role_type }}"
+      Environment: "{{ env }}"
+      Tier: "load_balancer"
+      Target: "{{ item.key }}"
+      Protocol: "{{ loadbalancer_target_group.protocol }}"
+  with_dict: "{{ target_groups }}"
