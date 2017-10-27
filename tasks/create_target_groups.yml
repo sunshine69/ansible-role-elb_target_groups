@@ -17,7 +17,7 @@
     modify_targets: no
     vpc_id: "{{ vpc_facts.vpcs[0].id }}"
     health_check_protocol: "{{ loadbalancer_health_check.protocol }}"
-    health_check_port: "{{ loadbalancer_health_check.port }}"
+    health_check_port: "{{ loadbalancer_health_check.port|default(omit) }}"
     health_check_path: "{{ loadbalancer_health_check.path }}"
     health_check_timeout: "{{ loadbalancer_health_check.response_timeout }}"
     health_check_interval: "{{ loadbalancer_health_check.interval }}"
