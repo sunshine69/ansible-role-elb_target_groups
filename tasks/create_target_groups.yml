@@ -12,8 +12,8 @@
     profile: "{{ profile | default(omit) }}"
     name: "{{ item.value }}"
     state: present
-    protocol: "{{ loadbalancer_target_group.protocol }}"
-    port: "{{ loadbalancer_target_group.port }}"
+    protocol: "{{ loadbalancer_target_group_protocol }}"
+    port: "{{ loadbalancer_target_group_port }}"
     modify_targets: no
     vpc_id: "{{ vpc_facts.vpcs[0].id }}"
     health_check_protocol: "{{ loadbalancer_health_check.protocol }}"
@@ -24,11 +24,11 @@
     unhealthy_threshold_count: "{{ loadbalancer_health_check.unhealthy_threshold }}"
     healthy_threshold_count: "{{ loadbalancer_health_check.healthy_threshold }}"
     successful_response_codes: "{{ loadbalancer_health_check.successful_response_codes|default(omit) }}"
-    deregistration_delay_timeout: "{{ loadbalancer_target_group.connection_draining|default(omit) }}"
+    deregistration_delay_timeout: "{{ loadbalancer_target_group_connection_draining|default(omit) }}"
     tags:
       Application: "{{ role_type }}"
       Environment: "{{ env }}"
       Tier: "load_balancer"
       Target: "{{ item.key }}"
-      Protocol: "{{ loadbalancer_target_group.protocol }}"
+      Protocol: "{{ loadbalancer_target_group_protocol }}"
   with_dict: "{{ target_groups }}"
