@@ -21,7 +21,7 @@
     health_check_path: "{{ item.value.health_check_path|default(loadbalancer_health_check.path) }}"
     health_check_timeout: "{{ item.value.health_check_timeout|default(loadbalancer_health_check.response_timeout) }}"
     health_check_interval: "{{ item.value.health_check_interval|default(loadbalancer_health_check.interval) }}"
-    unhealthy_threshold_count: "{{ item.value.unhealthy_threshold_count(default(loadbalancer_health_check.unhealthy_threshold) }}"
+    unhealthy_threshold_count: "{{ item.value.unhealthy_threshold_count|default(loadbalancer_health_check.unhealthy_threshold) }}"
     healthy_threshold_count: "{{ item.value.healthy_threshold_count|default(loadbalancer_health_check.healthy_threshold) }}"
     successful_response_codes: "{{ item.value.successful_response_codes|default(loadbalancer_health_check.successful_response_codes|default(omit)) }}"
     deregistration_delay_timeout: "{{ item.value.deregistration_delay_timeout|default(loadbalancer_target_group_connection_draining|default(omit)) }}"
