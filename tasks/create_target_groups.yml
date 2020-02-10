@@ -1,5 +1,5 @@
 - name: find target group VPC
-  ec2_vpc_net_facts:
+  ec2_vpc_net_info:
     region: "{{ region }}"
     profile: "{{ profile | default(omit) }}"
     filters:
