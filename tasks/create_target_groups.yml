@@ -14,7 +14,9 @@
     state: present
     protocol: "{{ item.value.protocol|default(loadbalancer_target_group_protocol) }}"
     port: "{{ item.value.port|default(loadbalancer_target_group_port) }}"
-    modify_targets: no
+    modify_targets: "{{ modify_targets | default('yes') }}"
+    stickiness_enabled: "{{ stickiness_enabled | default('no') }}"
+    stickiness_lb_cookie_duration: "{{ stickiness_lb_cookie_duration|default(86400) }}"
     vpc_id: "{{ vpc_facts.vpcs[0].id }}"
     health_check_protocol: "{{ item.value.health_check_protocol|default(loadbalancer_health_check.protocol) }}"
     health_check_port: "{{ item.value.health_check_port|default(loadbalancer_health_check.port|default(omit)) }}"
