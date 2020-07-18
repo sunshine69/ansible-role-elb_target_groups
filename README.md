@@ -6,9 +6,20 @@ by a load balancer
 
 # Variables
 
+Variables are from the standard lb_target_group param name and pick up from the `target_groups` structure. It has some
+default value with the same paraname with prefix `loadbalancer_target_group_`. Example below:
+
 * `target_groups` - a list of target groups to create
+* `loadbalancer_target_group_port` - port on which the target group listens
+* `loadbalancer_target_group_protocol` - protocol on which the target group listens
+* `loadbalancer_target_group_connection_draining` - period in seconds until connections
+  are forceably torn down
+
+etc..
+
 
 Examples
+
 ```
 target_groups:
   default:
